@@ -1,15 +1,18 @@
 package org.launchcode.techjobs.console;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Created by LaunchCode
  */
 public class TechJobs {
 
-    private static Scanner in = new Scanner(System.in);
+    private static final Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -58,27 +61,14 @@ public class TechJobs {
                 // What is their search term?
                 System.out.println("\nSearch term: ");
                 String searchTerm = in.nextLine();
+                ArrayList<String> results = JobData.findAll(searchField);
 
                 if (searchField.equals("all")) {
 
-                    ArrayList<String> results = JobData.findAll(searchField);
-
-                    for (int m = 0; m < results.size(); m++) {
-
-                        if (searchTerm.equalsIgnoreCase(results.get(m))) {
-
-                            printJobs(JobData.findByValue(searchField, results.get(m)));
-
-                        } else {
-
-                            System.out.println("No jobs available");
-
-                        }
-                    }
+                    printJobs(JobData.findByValue(searchTerm));
 
                 } else {
 
-                    ArrayList<String> results = JobData.findAll(searchField);
 
                     System.out.println("\n*** All " + columnChoices.get(searchField) + " Values ***");
 
@@ -87,16 +77,12 @@ public class TechJobs {
 
                         for (String result : results) {
 
-                            if (result.equalsIgnoreCase(searchTerm)) {
+                            if (result.contains(results.get(l))) {
 
-                                if () {
-
-                                    printJobs(JobData.findByValue(searchField, result));
-                                    break;
-
-                                }
+                                printJobs(JobData.findByValue(searchTerm));
 
                             }
+                            break;
                         }
                     }
                 }
@@ -138,7 +124,7 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
@@ -150,13 +136,13 @@ public class TechJobs {
 
             for (Map<String, String> job : someJobs) {
 
-                    System.out.println("\n*****");
-                    System.out.println("position type: " + job.get("position type"));
-                    System.out.println("name: " + job.get("name"));
-                    System.out.println("employer: " + job.get("employer"));
-                    System.out.println("location: " + job.get("location"));
-                    System.out.println("core competency: " + job.get("core competency"));
-                    System.out.println("*****");
+                System.out.println("\n*****");
+                System.out.println("position type: " + job.get("position type"));
+                System.out.println("name: " + job.get("name"));
+                System.out.println("employer: " + job.get("employer"));
+                System.out.println("location: " + job.get("location"));
+                System.out.println("core competency: " + job.get("core competency"));
+                System.out.println("*****");
 
             }
         }
